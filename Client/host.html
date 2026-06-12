@@ -1,0 +1,261 @@
+<!doctype html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Animateur — Quiz Campus</title>
+    <link rel="icon" type="image/png" href="./asset/Logo.png" />
+    <link rel="stylesheet" href="./Styles/host.css" />
+</head>
+<body>
+    <div class="host-header">
+        <div class="host-brand">
+            <h1>Quiz <span>Campus</span></h1>
+            <span class="user-email" id="user-email"></span>
+        </div>
+        <div class="host-actions">
+            <button id="btn-theme">🌙</button>
+            <button class="btn-logout" id="btn-logout">Déconnexion</button>
+        </div>
+    </div>
+
+    <main class="host-main">
+
+        <div id="host-toast" class="toast host-toast-bar"></div>
+
+        <!-- ÉCRAN A : Sélection de quiz -->
+        <section id="selection-section" class="hidden">
+            <header class="section-header">
+                <div>
+                    <h2>Mes Quiz</h2>
+                    <p class="quiz-subtitle">
+                        <span id="quiz-count">0</span> quiz enregistré(s)
+                    </p>
+                </div>
+                <button id="btn-show-create" class="btn-action">+ Créer un quiz</button>
+            </header>
+
+            <div id="quiz-list" class="quiz-grid"></div>
+        </section>
+
+        <!-- ÉCRAN B : Création de quiz -->
+        <section id="creation-section" class="hidden">
+            <header class="section-header">
+                <div>
+                    <h2>Configuration du Quiz</h2>
+                    <p class="quiz-subtitle">Créez vos questions et réglez le tempo</p>
+                </div>
+            </header>
+
+            <div class="builder-v2">
+                <!-- Bloc Titre -->
+                <div class="builder-card title-card">
+                    <label>Titre de votre Quiz</label>
+                    <input type="text" id="titre-quiz" placeholder="Ex: Culture Générale 2026" class="quiz-title-input-v2" />
+                </div>
+
+                <!-- Bloc Éditeur de Question -->
+                <div class="builder-card question-card">
+                    <div class="question-header-row">
+                        <textarea id="question" placeholder="Écrivez votre question ici..." class="question-textarea"></textarea>
+                    </div>
+
+                    <div class="builder-settings-row">
+                        <div class="input-field">
+                            <label>⏱️ Temps de réponse</label>
+                            <select id="timer">
+                                <option value="10">10 secondes</option>
+                                <option value="20" selected>20 secondes</option>
+                                <option value="30">30 secondes</option>
+                                <option value="60">1 minute</option>
+                            </select>
+                        </div>
+                        <div class="input-field">
+                            <label>🏆 Bonne réponse</label>
+                            <select id="bonne-reponse">
+                                <option value="0">▲ Réponse A (Rouge)</option>
+                                <option value="1">♦ Réponse B (Bleue)</option>
+                                <option value="2">● Réponse C (Jaune)</option>
+                                <option value="3">■ Réponse D (Verte)</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="answer-grid-v2">
+                        <div class="answer-box-v2 bg-red">
+                            <span class="symbol">▲</span>
+                            <input type="text" id="reponse-a" placeholder="Réponse A" />
+                        </div>
+                        <div class="answer-box-v2 bg-blue">
+                            <span class="symbol">♦</span>
+                            <input type="text" id="reponse-b" placeholder="Réponse B" />
+                        </div>
+                        <div class="answer-box-v2 bg-yellow">
+                            <span class="symbol">●</span>
+                            <input type="text" id="reponse-c" placeholder="Réponse C" />
+                        </div>
+                        <div class="answer-box-v2 bg-green">
+                            <span class="symbol">■</span>
+                            <input type="text" id="reponse-d" placeholder="Réponse D" />
+                        </div>
+                    </div>
+
+                    <button id="btn-add-question" class="btn-action btn-full">Valider cette question</button>
+                </div>
+
+                <!-- Bloc Liste des Questions -->
+                <div class="builder-card summary-card">
+                    <h3>Liste des questions (<span id="q-count">0</span>)</h3>
+                    <div id="sidebar-q-list" class="q-chips-list">
+                        <!-- Les pastilles apparaîtront ici -->
+                    </div>
+                </div>
+            </div>
+
+            <div class="builder-footer-v2">
+                <button id="btn-cancel-create" class="btn-secondary btn-footer-side">Annuler</button>
+                <button id="btn-save-quiz" class="btn-action btn-footer-side">💾 Enregistrer le Quiz</button>
+            </div>
+        </section>
+
+        <!-- ÉCRAN C : Salon d'attente -->
+        <section id="lobby-section" class="form-container hidden">
+            <header>
+                <h2>Salon d'attente</h2>
+            </header>
+
+            <div class="pin-display" id="display-pin">------</div>
+
+            <div>
+                <h3 class="lobby-subtitle">
+                    Joueurs connectés (<span id="player-count">0</span>)
+                </h3>
+                <ul id="player-list"></ul>
+            </div>
+
+            <button id="btn-start-game" class="btn-action">Lancer la partie !</button>
+        </section>
+
+        <!-- ÉCRAN D : Jeu en direct -->
+        <section id="game-section" class="form-container hidden">
+            <header>
+                <div class="timer-container">
+                    <span id="game-timer">--</span>s
+                </div>
+                <h2 id="display-question" class="question-title">Question</h2>
+            </header>
+
+            <div class="answers-grid" id="host-answers-grid">
+                <div class="answer-box btn-red" data-index="0">
+                    <span class="symbol">▲</span>
+                    <span class="answer-text-host" id="answer-0-text">A</span>
+                </div>
+                <div class="answer-box btn-blue" data-index="1">
+                    <span class="symbol">♦</span>
+                    <span class="answer-text-host" id="answer-1-text">B</span>
+                </div>
+                <div class="answer-box btn-yellow" data-index="2">
+                    <span class="symbol">●</span>
+                    <span class="answer-text-host" id="answer-2-text">C</span>
+                </div>
+                <div class="answer-box btn-green" data-index="3">
+                    <span class="symbol">■</span>
+                    <span class="answer-text-host" id="answer-3-text">D</span>
+                </div>
+            </div>
+
+            <p id="responses-count" class="responses-count">Réponses : 0 / 0</p>
+        </section>
+
+        <!-- ÉCRAN E : Révélation réponse -->
+        <section id="reveal-section" class="form-container hidden">
+            <header>
+                <h2>Temps écoulé !</h2>
+            </header>
+
+            <div class="answers-grid" id="reveal-answers-grid">
+                <div class="answer-box btn-red" data-index="0">
+                    <span class="symbol">▲</span>
+                    <span class="answer-text-host" id="reveal-answer-0">A</span>
+                </div>
+                <div class="answer-box btn-blue" data-index="1">
+                    <span class="symbol">♦</span>
+                    <span class="answer-text-host" id="reveal-answer-1">B</span>
+                </div>
+                <div class="answer-box btn-yellow" data-index="2">
+                    <span class="symbol">●</span>
+                    <span class="answer-text-host" id="reveal-answer-2">C</span>
+                </div>
+                <div class="answer-box btn-green" data-index="3">
+                    <span class="symbol">■</span>
+                    <span class="answer-text-host" id="reveal-answer-3">D</span>
+                </div>
+            </div>
+
+            <div class="reveal-stats">
+                <div class="reveal-stat">
+                    <span class="number white" id="reveal-answered">0</span>
+                    <span class="label">ont répondu</span>
+                </div>
+                <div class="reveal-stat">
+                    <span class="number green" id="reveal-correct">0%</span>
+                    <span class="label">bonnes réponses</span>
+                </div>
+                <div class="reveal-stat">
+                    <span class="number red" id="reveal-wrong">0</span>
+                    <span class="label">mauvaises</span>
+                </div>
+            </div>
+
+            <button id="btn-see-leaderboard" class="btn-action">Voir le classement →</button>
+        </section>
+
+        <!-- ÉCRAN F : Classement -->
+        <section id="leaderboard-section" class="form-container hidden">
+            <header>
+                <h2>Classement</h2>
+            </header>
+
+            <ul id="leaderboard-list" class="leaderboard-list"></ul>
+
+            <button id="btn-next-after-lb" class="btn-action">Question suivante →</button>
+        </section>
+
+        <!-- ÉCRAN G : Podium Final -->
+        <section id="podium-section" class="form-container hidden"></section>
+
+    </main>
+
+    <script>
+        const btnTheme = document.getElementById('btn-theme');
+        const root = document.documentElement;
+        const savedTheme = localStorage.getItem('theme');
+        const osDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+
+        if (savedTheme) {
+            if (savedTheme === 'dark') {
+                root.setAttribute('data-theme', 'dark');
+                btnTheme.textContent = '☀️';
+            }
+        } else if (osDark) {
+            root.setAttribute('data-theme', 'dark');
+            btnTheme.textContent = '☀️';
+        }
+
+        btnTheme.addEventListener('click', () => {
+            const isDark = root.getAttribute('data-theme') === 'dark';
+            if (isDark) {
+                root.removeAttribute('data-theme');
+                btnTheme.textContent = '🌙';
+                localStorage.setItem('theme', 'light');
+            } else {
+                root.setAttribute('data-theme', 'dark');
+                btnTheme.textContent = '☀️';
+                localStorage.setItem('theme', 'dark');
+            }
+        });
+    </script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="js/host.js"></script>
+</body>
+</html>

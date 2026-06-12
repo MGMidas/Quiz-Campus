@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Joueur — QuizCampus</title>
+    <link rel="icon" type="image/png" href="./asset/Logo.png">
+    <link rel="stylesheet" href="./Styles/joueur.css">
+</head>
+<body>
+    <header class="player-status">
+        <div class="player-info">
+            Pseudo: <span id="player-name">Joueur1</span>
+        </div>
+        <div class="player-score">
+            Score: <span id="player-score">0</span> pts
+        </div>
+        <button id="btn-theme">🌙</button>
+    </header>
+
+    <main class="player-container">
+        
+        <section id="screen-waiting" class="game-screen">
+            <div class="loader-content">
+                <h2>Tu es connecté !</h2>
+                <p>Regarde l'écran principal...</p>
+                <div class="spinner"></div>
+                <p class="subtext">En attente du lancement de la partie par l'animateur.</p>
+            </div>
+        </section>
+
+        <section id="screen-game" class="game-screen hidden">
+            <div class="player-timer-game">
+                <span id="player-timer">--</span>s
+            </div>
+            <p id="player-question" class="player-question">Question</p>
+            <div class="pad-grid">
+                <button class="pad-btn btn-red" data-answer="0">
+                    <span class="symbol">▲</span>
+                    <span class="pad-text" id="pad-text-0"></span>
+                </button>
+                <button class="pad-btn btn-blue" data-answer="1">
+                    <span class="symbol">♦</span>
+                    <span class="pad-text" id="pad-text-1"></span>
+                </button>
+                <button class="pad-btn btn-yellow" data-answer="2">
+                    <span class="symbol">●</span>
+                    <span class="pad-text" id="pad-text-2"></span>
+                </button>
+                <button class="pad-btn btn-green" data-answer="3">
+                    <span class="symbol">■</span>
+                    <span class="pad-text" id="pad-text-3"></span>
+                </button>
+            </div>
+        </section>
+
+        <section id="screen-feedback" class="game-screen hidden">
+            <div class="feedback-content">
+                <h2 id="feedback-title" class="text-success">Correct !</h2>
+                <p id="feedback-streak">🔥 +100 points de rapidité</p>
+            </div>
+        </section>
+
+    </main>
+
+    <script>
+        const btnTheme = document.getElementById('btn-theme');
+        const root = document.documentElement;
+        const savedTheme = localStorage.getItem('theme');
+        const osDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+
+        if (savedTheme) {
+            if (savedTheme === 'dark') {
+                root.setAttribute('data-theme', 'dark');
+                btnTheme.textContent = '☀️';
+            }
+        } else if (osDark) {
+            root.setAttribute('data-theme', 'dark');
+            btnTheme.textContent = '☀️';
+        }
+
+        btnTheme.addEventListener('click', () => {
+            const isDark = root.getAttribute('data-theme') === 'dark';
+            if (isDark) {
+                root.removeAttribute('data-theme');
+                btnTheme.textContent = '🌙';
+                localStorage.setItem('theme', 'light');
+            } else {
+                root.setAttribute('data-theme', 'dark');
+                btnTheme.textContent = '☀️';
+                localStorage.setItem('theme', 'dark');
+            }
+        });
+    </script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="js/player.js"></script>
+</body>
+</html>

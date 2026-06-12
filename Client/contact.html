@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="À propos de QuizCampus — Qui sommes-nous, qui suis-je, et la genèse du projet.">
+    <title>À propos — QuizCampus</title>
+    <link rel="icon" type="image/png" href="./asset/Logo.png">
+    <link rel="stylesheet" href="./Styles/accueil.css">
+</head>
+
+<body>
+    <header>
+        <nav class="navbar">
+            <div class="nav-logo">
+                <a href="accueil.html" class="nav-logo-link">
+                    <img src="./asset/Logo.png" alt="Logo QuizCampus">
+                    <span class="nav-brand">
+                        <span class="blue">Quiz</span><span class="orange">Campus</span>
+                    </span>
+                </a>
+            </div>
+
+            <div class="nav-actions">
+                <button id="btn-theme">🌙</button>
+                <a href="accueil.html" class="btn-outline desktop-btn">Accueil</a>
+                <a href="connexion.html" class="btn-outline desktop-btn">Connexion</a>
+                <a href="inscription.html" class="btn-primary desktop-btn">Inscription</a>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <section class="presentation" style="padding-top: 80px;">
+            <div class="card">
+                <div class="presentation-text">
+                    <h2>Qui sommes-nous</h2>
+                    <p>Bienvenue sur QuizCampus — Simplicité et interactivité au service de votre formation.</p>
+                    <p>QuizCampus transforme l'évaluation pédagogique en un moment privilégié d'interaction. Notre interface permet aux formateurs de générer des quiz sur mesure et de piloter des sessions de groupe en toute simplicité. Grâce au système de connexion par code PIN, vos apprenants accèdent instantanément à l'évaluation, favorisant un engagement immédiat et une mesure précise de la progression du groupe.</p>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="presentation-text">
+                    <h2>Qui suis-je ?</h2>
+                    <p>Actuellement en formation Développement Web & Web Mobile <a href="https://molengeek.com/rbx/">Chez MolenGeek</a>, je suis un passionné de code en pleine phase de construction de mes compétences (niveau Bac+2).</p>
+                    <p>QuizCampus est né de mon envie de mettre en pratique ce que j'apprends au quotidien. Plutôt que de simplement théoriser, j'aime confronter mes lignes de code à des cas d'usage réels. Ce projet est pour moi un moyen de relever un défi technique concret : créer un outil interactif, fluide et utile pour les formateurs.</p>
+                    <p>Je suis en constante recherche d'amélioration et de nouveaux défis pour affiner mon savoir-faire technique. Développer QuizCampus m'a permis d'explorer des technologies comme Socket.io et de mieux comprendre les enjeux de l'expérience utilisateur.</p>
+                </div>
+
+                <div class="presentation-img">
+                    <img src="./asset/centre de formation.jpeg" alt="Photo du centre de formation MolenGeek">
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        const btnTheme = document.getElementById('btn-theme');
+        const root = document.documentElement;
+        const savedTheme = localStorage.getItem('theme');
+        const osDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+
+        if (savedTheme) {
+            if (savedTheme === 'dark') {
+                root.setAttribute('data-theme', 'dark');
+                btnTheme.textContent = '☀️';
+            }
+        } else if (osDark) {
+            root.setAttribute('data-theme', 'dark');
+            btnTheme.textContent = '☀️';
+        }
+
+        btnTheme.addEventListener('click', () => {
+            const isDark = root.getAttribute('data-theme') === 'dark';
+            if (isDark) {
+                root.removeAttribute('data-theme');
+                btnTheme.textContent = '🌙';
+                localStorage.setItem('theme', 'light');
+            } else {
+                root.setAttribute('data-theme', 'dark');
+                btnTheme.textContent = '☀️';
+                localStorage.setItem('theme', 'dark');
+            }
+        });
+    </script>
+
+    <footer class="home-footer">
+        <div class="home-footer-inner">
+            <div class="home-footer-brand"><span class="blue">Quiz</span> <span class="orange">Campus</span></div>
+            <div class="home-footer-links">
+                <a href="rejoindre.html">Jouer</a>
+                <a href="connexion.html">Connexion</a>
+                <a href="inscription.html">Inscription</a>
+                <a href="contact.html">À propos</a>
+                <a href="https://github.com/MGMidas/Kahoot-clone" target="_blank">GitHub</a>
+            </div>
+            <div class="home-footer-copy">&copy; 2026 Quiz Campus</div>
+        </div>
+    </footer>
+</body>
+
+</html>

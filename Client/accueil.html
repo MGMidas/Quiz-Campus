@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+    <meta name="description"
+        content="QuizCampus - Plateforme de quiz interactive en temps réel. Créez, partagez et participez à des quiz pédagogiques avec connexion par code PIN.">
+    <title>QuizCampus — Accueil</title>
+    <link rel="icon" type="image/png" href="./asset/Logo.png">
+    <link rel="stylesheet" href="./Styles/accueil.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+
+<body>
+    <header>
+        <nav class="navbar">
+            <div class="nav-logo">
+                <a href="accueil.html" class="nav-logo-link">
+                    <img src="./asset/Logo.png" alt="Logo QuizCampus">
+                    <span class="nav-brand">
+                        <span class="blue">Quiz</span><span class="orange">Campus</span>
+                    </span>
+                </a>
+            </div>
+
+            <div class="nav-actions">
+                <button id="btn-theme">🌙</button>
+                <a href="contact.html" class="btn-outline desktop-btn">À propos</a>
+                <a href="connexion.html" class="btn-outline desktop-btn">Connexion</a>
+                <a href="inscription.html" class="btn-primary desktop-btn">Inscription</a>
+                <button id="btn-menu" aria-label="Menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+        </nav>
+
+        <div class="mobile-overlay" id="mobile-overlay"></div>
+        <div class="mobile-menu" id="mobile-menu">
+            <a href="contact.html" class="btn-outline">À propos</a>
+            <a href="connexion.html" class="btn-outline">Connexion</a>
+            <a href="inscription.html" class="btn-primary">Inscription</a>
+        </div>
+    </header>
+
+    <main>
+        <section class="hero">
+            <div class="hero-text">
+                <h1>
+                    <span class="blue">Quiz</span><span class="orange">Campus</span>
+                </h1>
+                <p>Créez, partagez et participez à des quiz interactifs en temps réel. Une expérience d'apprentissage moderne et engageante.</p>
+                <div class="hero-actions">
+                    <a href="rejoindre.html" class="btn-primary">Jouer</a>
+                    <a href="connexion.html" class="btn-outline">Créer un quiz</a>
+                </div>
+            </div>
+        </section>
+
+        <section class="cards-section">
+            <div class="card">
+                <i class="fa-solid fa-bolt"></i>
+                <h3>Temps Réel</h3>
+                <p>Synchronisation instantanée grâce à Socket.io pour une expérience en temps réel.</p>
+            </div>
+            <div class="card">
+                <i class="fa-solid fa-users"></i>
+                <h3>Multi-joueurs</h3>
+                <p>Sessions illimitées avec des participants du monde entier.</p>
+            </div>
+            <div class="card">
+                <i class="fa-solid fa-plus"></i>
+                <h3>Personnalisable</h3>
+                <p>Créez vos propres quiz sur mesure en quelques minutes.</p>
+            </div>
+        </section>
+
+        <section class="home-presentation">
+            <div class="home-presentation-inner">
+                <h2 class="home-presentation-title">Apprendre. Interagir. Progresser.</h2>
+                <p class="home-presentation-desc">Que vous soyez étudiant, enseignant ou professionnel, notre plateforme vous permet d'apprendre en vous amusant, d'interagir avec votre audience et de suivre votre progression en temps réel.</p>
+            </div>
+        </section>
+
+        <section class="home-steps">
+            <h2 class="home-steps-heading">Comment ça marche ?</h2>
+            <div class="home-steps-grid">
+                <div class="home-step">
+                    <div class="home-step-number">1</div>
+                    <h3 class="home-step-title">Créez</h3>
+                    <p class="home-step-desc">Concevez votre quiz en quelques minutes.</p>
+                </div>
+                <div class="home-step">
+                    <div class="home-step-number">2</div>
+                    <h3 class="home-step-title">Partagez</h3>
+                    <p class="home-step-desc">Invitez vos participants à rejoindre la session.</p>
+                </div>
+                <div class="home-step">
+                    <div class="home-step-number">3</div>
+                    <h3 class="home-step-title">Jouez</h3>
+                    <p class="home-step-desc">Suivez les résultats en direct et progressez ensemble.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="stack">
+            <h2>Stack Technique utilisée pour le site</h2>
+            <div class="stack-wrapper">
+                <span class="stack-item"><i class="fa-brands fa-html5"></i> HTML5</span>
+                <span class="stack-item"><i class="fa-brands fa-css3-alt"></i> CSS3</span>
+                <span class="stack-item"><i class="fa-brands fa-js"></i> JavaScript</span>
+                <span class="stack-item"><i class="fa-solid fa-bolt"></i> Socket.io</span>
+                <span class="stack-item"><i class="fa-brands fa-node-js"></i> Node.js</span>
+                <span class="stack-item"><i class="fa-solid fa-server"></i> Express</span>
+                <span class="stack-item"><i class="fa-solid fa-database"></i> MariaDB</span>
+            </div>
+        </section>
+
+        <section class="a-propos">
+            <div class="home-about-inner">
+                <h2 class="home-about-heading">À propos</h2>
+                <p class="home-about-desc">Quiz Campus est une plateforme de quiz interactive créée dans le cadre de ma formation. Créez vos propres questionnaires, animez des sessions en temps réel et défiez vos amis ou vos étudiants.</p>
+                <a href="https://github.com/MGMidas/Kahoot-clone" class="home-about-link" target="_blank">GitHub</a>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        const btnTheme = document.getElementById('btn-theme');
+        const root = document.documentElement;
+        const savedTheme = localStorage.getItem('theme');
+        const osDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+
+        if (savedTheme) {
+            if (savedTheme === 'dark') {
+                root.setAttribute('data-theme', 'dark');
+                btnTheme.textContent = '☀️';
+            }
+        } else if (osDark) {
+            root.setAttribute('data-theme', 'dark');
+            btnTheme.textContent = '☀️';
+        }
+
+        btnTheme.addEventListener('click', () => {
+            const isDark = root.getAttribute('data-theme') === 'dark';
+            if (isDark) {
+                root.removeAttribute('data-theme');
+                btnTheme.textContent = '🌙';
+                localStorage.setItem('theme', 'light');
+            } else {
+                root.setAttribute('data-theme', 'dark');
+                btnTheme.textContent = '☀️';
+                localStorage.setItem('theme', 'dark');
+            }
+        });
+
+        const btnMenu = document.getElementById('btn-menu');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const mobileOverlay = document.getElementById('mobile-overlay');
+
+        function toggleMenu() {
+            btnMenu.classList.toggle('active');
+            mobileMenu.classList.toggle('open');
+            mobileOverlay.classList.toggle('open');
+        }
+
+        btnMenu.addEventListener('click', toggleMenu);
+        mobileOverlay.addEventListener('click', toggleMenu);
+    </script>
+
+    <footer class="home-footer">
+        <div class="home-footer-inner">
+            <div class="home-footer-brand"><span class="blue">Quiz</span> <span class="orange">Campus</span></div>
+            <div class="home-footer-links">
+                <a href="rejoindre.html">Jouer</a>
+                <a href="connexion.html">Connexion</a>
+                <a href="inscription.html">Inscription</a>
+                <a href="contact.html">À propos</a>
+                <a href="https://github.com/MGMidas/Kahoot-clone" target="_blank">GitHub</a>
+            </div>
+            <div class="home-footer-copy">&copy; 2026 Quiz Campus</div>
+        </div>
+    </footer>
+</body>
+
+</html>

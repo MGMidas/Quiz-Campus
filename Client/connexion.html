@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Connexion — QuizCampus</title>
+    <link rel="icon" type="image/png" href="./asset/Logo.png">
+    <link rel="stylesheet" href="./Styles/connexion.css" />
+</head>
+<body class="auth-page">
+    <div class="theme-btn-wrap">
+        <button id="btn-theme">🌙</button>
+    </div>
+    <div class="auth-card">
+        <a href="accueil.html" class="btn-back">&larr; Retour</a>
+
+        <div class="logo">Quiz <span>Campus</span></div>
+        <p class="subtitle">Connecte-toi pour créer et animer des quiz</p>
+
+        <div id="toast" class="toast"></div>
+
+        <div class="input-group">
+            <label>Email</label>
+            <input type="email" id="email" placeholder="exemple@email.com" autocomplete="email" />
+            <div class="error-msg" id="email-error">Email invalide</div>
+        </div>
+
+        <div class="input-group">
+            <label>Mot de passe</label>
+            <input type="password" id="password" placeholder="••••••••" autocomplete="current-password" />
+            <div class="error-msg" id="password-error">Mot de passe requis</div>
+        </div>
+
+        <button id="btn-submit" class="btn-auth">
+            <span id="btn-text">Se connecter</span>
+        </button>
+
+        <a href="inscription.html" class="auth-link">
+            Pas encore de compte ? <span>Créer un compte</span>
+        </a>
+    </div>
+
+    <script>
+        const btnTheme = document.getElementById('btn-theme');
+        const root = document.documentElement;
+        const savedTheme = localStorage.getItem('theme');
+        const osDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+
+        if (savedTheme) {
+            if (savedTheme === 'dark') {
+                root.setAttribute('data-theme', 'dark');
+                btnTheme.textContent = '☀️';
+            }
+        } else if (osDark) {
+            root.setAttribute('data-theme', 'dark');
+            btnTheme.textContent = '☀️';
+        }
+
+        btnTheme.addEventListener('click', () => {
+            const isDark = root.getAttribute('data-theme') === 'dark';
+            if (isDark) {
+                root.removeAttribute('data-theme');
+                btnTheme.textContent = '🌙';
+                localStorage.setItem('theme', 'light');
+            } else {
+                root.setAttribute('data-theme', 'dark');
+                btnTheme.textContent = '☀️';
+                localStorage.setItem('theme', 'dark');
+            }
+        });
+    </script>
+    <script src="js/login.js"></script>
+</body>
+</html>
