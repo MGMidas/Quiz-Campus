@@ -31,6 +31,12 @@ function hideToast() {
     toast.className = 'toast';
 }
 
+function escapeHTML(str) {
+    const div = document.createElement('div');
+    div.textContent = str;
+    return div.innerHTML;
+}
+
 function getUserEmail() {
     fetch('/api/auth/me', {
         headers: { 'Authorization': `Bearer ${token}` }
@@ -120,7 +126,7 @@ function renderQuizList() {
         const div = document.createElement('div');
         div.className = 'quiz-card';
         div.innerHTML = `
-            <h3>${quiz.titre}</h3>
+            <h3>${escapeHTML(quiz.titre)}</h3>
             <p>${quiz.questions.length} question(s)</p>
             <div class="card-actions">
                 <button class="btn-action btn-launch">Lancer la partie</button>
@@ -168,9 +174,10 @@ function renderQuestionList() {
     tempQuestions.forEach((q, i) => {
         const chip = document.createElement('div');
         chip.className = `q-chip ${currentEditingIndex === i ? 'active' : ''}`;
+        const displayedText = q.texte.substring(0, 30) + (q.texte.length > 30 ? '...' : '');
         chip.innerHTML = `
             <span class="q-number">${i + 1}</span>
-            <span class="q-text">${q.texte.substring(0, 30)}${q.texte.length > 30 ? '...' : ''}</span>
+            <span class="q-text">${escapeHTML(displayedText)}</span>
             <div class="q-actions">
                 <button class="q-edit-btn" title="Modifier">✏️</button>
                 <button class="q-delete-btn" title="Supprimer">✕</button>
@@ -441,7 +448,7 @@ socket.on('show_leaderboard', (data) => {
         const medals = ['🥇', '🥈', '🥉'];
         li.innerHTML = `
             <span class="rank">${medals[i] || `#${i + 1}`}</span>
-            <span class="pseudo">${p.pseudo}</span>
+            <span class="pseudo">${escapeHTML(p.pseudo)}</span>
             <span class="score">${p.score} pts</span>
         `;
         list.appendChild(li);
@@ -484,7 +491,7 @@ socket.on('quiz_ended', (data) => {
             podiumHtml += `
                 <div class="podium-entry">
                     <div class="medal">${medals[oi]}</div>
-                    <div class="pseudo">${top3[oi].pseudo}</div>
+                    <div class="pseudo">${escapeHTML(top3[oi].pseudo)}</div>
                     <div class="score">${top3[oi].score} pts</div>
                     <div class="podium-bar ${barClass[oi]}"></div>
                 </div>
@@ -497,7 +504,7 @@ socket.on('quiz_ended', (data) => {
     if (rest.length > 0) {
         podiumHtml += `<ul class="podium-rest">`;
         rest.forEach((p, i) => {
-            podiumHtml += `<li><span>#${i + 4} ${p.pseudo}</span><span>${p.score} pts</span></li>`;
+            podiumHtml += `<li><span>#${i + 4} ${escapeHTML(p.pseudo)}</span><span>${p.score} pts</span></li>`;
         });
         podiumHtml += `</ul>`;
     }

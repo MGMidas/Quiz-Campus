@@ -14,6 +14,12 @@ function showToast(msg, type) {
     toastTimeout = setTimeout(() => { toast.className = 'toast'; }, 3000);
 }
 
+function escapeHTML(str) {
+    const div = document.createElement('div');
+    div.textContent = str;
+    return div.innerHTML;
+}
+
 if (btnValider) {
     btnValider.addEventListener('click', () => {
         const pin = inputPin.value;
@@ -172,7 +178,7 @@ socket.on('game_terminated', (message) => {
     document.getElementById('screen-waiting').innerHTML = `
         <div class="loader-content">
             <h2>🚫 Partie terminée</h2>
-            <p>${message || "L'animateur a quitté la partie."}</p>
+            <p>${escapeHTML(message || "L'animateur a quitté la partie.")}</p>
             <a href="accueil.html" class="btn-player">Retour à l'accueil</a>
         </div>
     `;
