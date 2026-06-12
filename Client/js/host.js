@@ -16,10 +16,14 @@ const toast = document.getElementById('host-toast');
 const token = localStorage.getItem('token');
 if (!token) { window.location.href = 'connexion.html'; }
 
+let toastTimeout;
 function showToast(msg, type) {
     if (!toast) return;
     toast.textContent = msg;
     toast.className = `toast ${type} visible`;
+    
+    clearTimeout(toastTimeout);
+    toastTimeout = setTimeout(hideToast, 3000);
 }
 
 function hideToast() {

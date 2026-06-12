@@ -8,9 +8,13 @@ const emailError = document.getElementById('email-error');
 const passwordError = document.getElementById('password-error');
 const confirmError = document.getElementById('confirm-error');
 
+let toastTimeout;
 function showToast(msg, type) {
+    if (!toast) return;
     toast.textContent = msg;
     toast.className = `toast ${type} visible`;
+    clearTimeout(toastTimeout);
+    toastTimeout = setTimeout(hideToast, 3000);
 }
 
 function hideToast() {

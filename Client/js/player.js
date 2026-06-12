@@ -5,11 +5,13 @@ const inputPin = document.getElementById('input-pin');
 const inputPseudo = document.getElementById('input-pseudo');
 const toast = document.getElementById('player-toast');
 
+let toastTimeout;
 function showToast(msg, type) {
     if (!toast) return;
     toast.textContent = msg;
     toast.className = `toast ${type} visible`;
-    setTimeout(() => { toast.className = 'toast'; }, 4000);
+    clearTimeout(toastTimeout);
+    toastTimeout = setTimeout(() => { toast.className = 'toast'; }, 3000);
 }
 
 if (btnValider) {
